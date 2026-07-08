@@ -1,0 +1,143 @@
+<div class="delivery-dashboard">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-left">
+      <h1>Tableau de Bord Livreur</h1>
+      <p class="welcome-text">Bienvenue, {{ deliveryPerson?.name }}</p>
+    </div>
+    <div class="header-right">
+      <div class="availability-toggle">
+        <label class="switch">
+          <input type="checkbox" [checked]="deliveryPerson?.isAvailable" (change)="toggleAvailability()">
+          <span class="slider round"></span>
+        </label>
+        <span>{{ deliveryPerson?.isAvailable ? 'Disponible' : 'Indisponible' }}</span>
+      </div>
+      <div class="notification-badge" *ngIf="unreadCount > 0">
+        <span class="badge">{{ unreadCount }}</span>
+      </div>
+      <button (click)="logout()" class="btn-logout">Déconnexion</button>
+    </div>
+  </header>
+
+  <div class="dashboard-content">
+    <!-- Liste des commandes -->
+    <div class="orders-section" *ngIf="!selectedOrder">
+      <h2>Mes Livraisons</h2>
+      
+      <div *ngIf="loading" class="loading">
+        Chargement des commandes...
+      </div>
+
+      <div *ngIf="!loading && assignedOrders.length === 0" class="empty-state">
+        <p>Aucune commande assignée pour le moment.</p>
+      </div>
+
+      <div class="orders-grid" *ngIf="!loading && assignedOrders.length > 0">
+        <div class="order-card" *ngFor="let order of assignedOrders" (click)="selectOrder(order)">
+          <div class="order-header">
+            <span class="order-number">#{{ order.orderNumber }}</span>
+            <span class="order-status" [style.background-color]="getStatusColor(order.deliveryStatus)">
+              {{ getStatusLabel(order.deliveryStatus) }}
+            </span>
+          </div>
+          <div class="order-body">
+            <p class="order-address">
+              <strong>Adresse:</strong> {{ order.shippingAddress?.street }}, {{ order.shippingAddress?.city }}
+            </p>
+            <p class="order-total">
+              <strong>Total:</strong> {{ order.total }} FCFA
+            </p>
+            <p class="order-date">
+              <strong>Date:</strong> {{ order.createdAt | date:'short' }}
+            </p>
+          </div>
+          <div class="order-actions">
+            <button *ngIf="order.deliveryStatus === 'pending'" 
+                    (click)="acceptOrder(order.id); $event.stopPropagation()" 
+                    class="btn-accept">
+              Accepter
+            </button>
+            <button class="btn-chat">
+              💬 Discuter
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Détails de la commande et chat -->
+    <div class="order-detail-section" *ngIf="selectedOrder">
+      <button (click)="selectedOrder = null" class="btn-back">
+        ← Retour aux commandes
+      </button>
+
+      <div class="order-detail">
+        <h2>Commande #{{ selectedOrder.orderNumber }}</h2>
+        
+        <div class="order-info">
+          <div class="info-row">
+            <span class="label">Statut:</span>
+            <span class="value" [style.background-color]="getStatusColor(selectedOrder.deliveryStatus)">
+              {{ getStatusLabel(selectedOrder.deliveryStatus) }}
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="label">Adresse:</span>
+            <span class="value">{{ selectedOrder.shippingAddress?.street }}, {{ selectedOrder.shippingAddress?.city }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Téléphone client:</span>
+            <span class="value">{{ selectedOrder.shippingAddress?.phone }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Total:</span>
+            <span class="value">{{ selectedOrder.total }} FCFA</span>
+          </div>
+        </div>
+
+        <div class="delivery-actions">
+          <h3>Actions de livraison</h3>
+          <div class="action-buttons">
+            <button *ngIf="selectedOrder.deliveryStatus === 'accepted'" 
+                    (click)="updateDeliveryStatus(selectedOrder.id, 'picked_up')"
+                    class="btn-action">
+              📦 Commande récupérée
+            </button>
+            <button *ngIf="selectedOrder.deliveryStatus === 'picked_up'" 
+                    (click)="updateDeliveryStatus(selectedOrder.id, 'in_transit')"
+                    class="btn-action">
+              🚚 En route vers le client
+            </button>
+            <button *ngIf="selectedOrder.deliveryStatus === 'in_transit'" 
+                    (click)="updateDeliveryStatus(selectedOrder.id, 'delivered')"
+                    class="btn-action btn-success">
+              ✅ Livraison terminée
+            </button>
+          </div>
+        </div>
+
+        <!-- Section Chat -->
+        <div class="chat-section">
+          <h3>Chat avec le client</h3>
+          <div class="chat-messages" *ngIf="selectedOrder.messages">
+            <div class="message" 
+                 *ngFor="let message of selectedOrder.messages"
+                 [class.sent]="message.senderType === 'delivery_person'"
+                 [class.received]="message.senderType === 'client'">
+              <div class="message-content">{{ message.content }}</div>
+              <div class="message-time">{{ message.createdAt | date:'shortTime' }}</div>
+            </div>
+          </div>
+          <div class="chat-input">
+            <input type="text" 
+                   placeholder="Écrivez votre message..." 
+                   [(ngModel)]="newMessage"
+                   (keyup.enter)="sendMessage()">
+            <button (click)="sendMessage()" class="btn-send">Envoyer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

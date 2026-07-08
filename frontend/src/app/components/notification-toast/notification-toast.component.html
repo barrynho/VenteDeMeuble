@@ -1,0 +1,19 @@
+<div class="notification-container">
+  <div 
+    *ngFor="let notification of notifications"
+    class="notification-toast"
+    [@slideIn]
+    [style.background-color]="getBackgroundColor(notification.type)"
+    [style.border-left-color]="getBorderColor(notification.type)">
+    <div class="notification-icon">
+      <i class="bi" [class]="getIcon(notification.type)" [style.color]="getIconColor(notification.type)"></i>
+    </div>
+    <div class="notification-content">
+      <div class="notification-title">{{ notification.title }}</div>
+      <div class="notification-message">{{ notification.message }}</div>
+    </div>
+    <button class="notification-close" (click)="removeNotification(notification.id)">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+</div>

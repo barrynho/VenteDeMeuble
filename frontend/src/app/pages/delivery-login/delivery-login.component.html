@@ -1,0 +1,78 @@
+<div class="delivery-auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1 *ngIf="isLoginMode">Connexion Livreur</h1>
+      <h1 *ngIf="!isLoginMode">Créer un compte Livreur</h1>
+    </div>
+
+    <div class="auth-body">
+      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+      <!-- Formulaire de connexion -->
+      <form *ngIf="isLoginMode" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <label>Adresse e-mail</label>
+          <input type="email" class="input-premium" [(ngModel)]="loginData.email" name="email" placeholder="livreur@ecom.com" required />
+        </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input type="password" class="input-premium" [(ngModel)]="loginData.password" name="password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn-premium">Se connecter</button>
+      </form>
+
+      <!-- Formulaire d'inscription -->
+      <form *ngIf="!isLoginMode" (ngSubmit)="onRegister()">
+        <div class="form-group">
+          <label>Nom complet *</label>
+          <input type="text" class="input-premium" [(ngModel)]="registerData.name" name="name" placeholder="Jean Dupont" required />
+        </div>
+        <div class="form-group">
+          <label>Adresse e-mail *</label>
+          <input type="email" class="input-premium" [(ngModel)]="registerData.email" name="email" placeholder="jean.dupont@exemple.com" required />
+        </div>
+        <div class="form-group">
+          <label>Téléphone *</label>
+          <input type="tel" class="input-premium" [(ngModel)]="registerData.phone" name="phone" placeholder="+242 06 888 88 88" required />
+        </div>
+        <div class="form-group">
+          <label>Mot de passe *</label>
+          <input type="password" class="input-premium" [(ngModel)]="registerData.password" name="password" placeholder="Minimum 6 caractères" required />
+        </div>
+        <div class="form-group">
+          <label>Type de véhicule *</label>
+          <select class="input-premium" [(ngModel)]="registerData.vehicleType" name="vehicleType">
+            <option value="moto">Moto</option>
+            <option value="voiture">Voiture</option>
+            <option value="velo">Vélo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Numéro d'immatriculation (optionnel)</label>
+          <input type="text" class="input-premium" [(ngModel)]="registerData.vehicleNumber" name="vehicleNumber" placeholder="AB123CD" />
+        </div>
+        <button type="submit" class="btn-premium">Créer mon compte</button>
+      </form>
+
+      <!-- Social Logins -->
+      <div class="social-divider">
+        <span>Ou continuer avec</span>
+      </div>
+      <div class="social-buttons">
+        <button class="btn-social google" (click)="socialLogin('Google')">
+          <i class="bi bi-google"></i> Google
+        </button>
+        <button class="btn-social apple" (click)="socialLogin('Apple')">
+          <i class="bi bi-apple"></i> Apple
+        </button>
+      </div>
+
+      <div class="auth-toggle">
+        <button (click)="toggleMode()" class="btn-link">
+          {{ isLoginMode ? "Pas encore de compte? S'inscrire" : "Déjà un compte? Se connecter" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

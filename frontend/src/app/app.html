@@ -1,0 +1,174 @@
+<div class="app-shell">
+  <!-- Desktop & Responsive Main Header -->
+  <header class="main-header glass">
+    <div class="header-container">
+      <!-- Hamburger Menu (Mobile only) -->
+      <button class="menu-toggle-btn" (click)="isMobileMenuOpen.set(true)" title="Menu">
+        <i class="bi bi-list"></i>
+      </button>
+
+      <!-- Brand Logo -->
+      <a routerLink="/" class="brand-logo">BS Dressing Service</a>
+
+      <!-- Desktop Center Navigation Links -->
+      <nav class="desktop-nav-links">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Accueil</a>
+        <a routerLink="/search" [queryParams]="{ category: 'meuble_rangement' }" routerLinkActive="active">Meubles de Rangement</a>
+        <a routerLink="/search" [queryParams]="{ isPromo: 'true' }" routerLinkActive="active" class="promo-link">Promotions</a>
+      </nav>
+
+      <!-- Right Action Bar -->
+      <div class="header-actions">
+        <!-- Settings (Desktop) -->
+        <div class="desktop-settings">
+          <!-- Language Switcher -->
+          <div class="lang-switcher">
+            <button [class.active]="activeLanguage() === 'FR'" (click)="changeLanguage('FR')">FR</button>
+            <span>|</span>
+            <button [class.active]="activeLanguage() === 'EN'" (click)="changeLanguage('EN')">EN</button>
+          </div>
+
+          <!-- Currency select -->
+          <select class="currency-select" [value]="activeCurrency()" (change)="changeCurrency($any($event.target).value)">
+            <option value="EUR">€ EUR</option>
+            <option value="FCFA">FCFA</option>
+            <option value="USD">$ USD</option>
+          </select>
+        </div>
+
+        <!-- Search Icon Link -->
+        <a routerLink="/search" class="action-icon-btn" title="Recherche">
+          <i class="bi bi-search"></i>
+        </a>
+
+        <!-- Wishlist Link -->
+        <a routerLink="/search" [queryParams]="{ onlyFavorites: 'true' }" class="action-icon-btn badge-parent" title="Favoris">
+          <i class="bi bi-heart"></i>
+          <span class="action-badge" *ngIf="favBadge() > 0">{{ favBadge() }}</span>
+        </a>
+
+        <!-- Shopping Cart Link -->
+        <a routerLink="/cart" class="action-icon-btn badge-parent" title="Panier">
+          <i class="bi bi-bag"></i>
+          <span class="action-badge" *ngIf="cartBadge() > 0">{{ cartBadge() }}</span>
+        </a>
+
+        <!-- Profile Link -->
+        <a routerLink="/profile" class="action-icon-btn profile-btn" title="Compte">
+          <i class="bi bi-person"></i>
+          <span class="profile-label" *ngIf="authService.currentUser()">{{ authService.currentUser()!.name.split(' ')[0] }}</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Side Menu Drawer Overlay -->
+  <div class="mobile-drawer-overlay" *ngIf="isMobileMenuOpen()" (click)="isMobileMenuOpen.set(false)"></div>
+  <!-- Mobile Side Menu Drawer -->
+  <aside class="mobile-drawer" [class.open]="isMobileMenuOpen()">
+    <div class="drawer-header">
+      <span class="drawer-title">Navigation</span>
+      <button class="close-drawer-btn" (click)="isMobileMenuOpen.set(false)"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="drawer-body">
+      <nav class="drawer-links">
+        <a routerLink="/" (click)="isMobileMenuOpen.set(false)"><i class="bi bi-house"></i> Accueil</a>
+        <a routerLink="/search" [queryParams]="{ category: 'meuble_rangement' }" (click)="isMobileMenuOpen.set(false)"><i class="bi bi-box-seam"></i> Meubles de Rangement</a>
+        <a routerLink="/search" (click)="isMobileMenuOpen.set(false)"><i class="bi bi-grid"></i> Tous les meubles</a>
+        <a routerLink="/search" [queryParams]="{ isPromo: 'true' }" (click)="isMobileMenuOpen.set(false)" class="promo-link"><i class="bi bi-percent"></i> Promotions</a>
+        <a routerLink="/search" [queryParams]="{ onlyFavorites: 'true' }" (click)="isMobileMenuOpen.set(false)"><i class="bi bi-heart"></i> Mes Favoris ({{ favBadge() }})</a>
+      </nav>
+
+      <div class="drawer-divider"></div>
+
+      <div class="drawer-settings">
+        <!-- Lang -->
+        <div class="setting-row">
+          <span>Langue</span>
+          <div class="lang-switcher">
+            <button [class.active]="activeLanguage() === 'FR'" (click)="changeLanguage('FR')">FR</button>
+            <span>|</span>
+            <button [class.active]="activeLanguage() === 'EN'" (click)="changeLanguage('EN')">EN</button>
+          </div>
+        </div>
+        <!-- Currency -->
+        <div class="setting-row">
+          <span>Devise</span>
+          <select class="currency-select" [value]="activeCurrency()" (change)="changeCurrency($any($event.target).value)">
+            <option value="EUR">€ EUR</option>
+            <option value="FCFA">FCFA</option>
+            <option value="USD">$ USD</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Router Outlet Area -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Professional Website Footer -->
+  <footer class="main-footer" *ngIf="router.url !== '/checkout' && !router.url.startsWith('/admin')">
+    <div class="footer-grid">
+      <!-- Col 1: Brand Info -->
+      <div class="footer-col brand-col">
+        <h3>BS Dressing Service</h3>
+        <p>Votre spécialiste en meubles de rangement : armoires, étagères, commodes et solutions de stockage élégantes pour organiser votre intérieur.</p>
+        <p class="store-location"><i class="bi bi-geo-alt-fill"></i> Nous sommes situé au pk8 au niveau des deux écoles</p>
+        <div class="social-links" style="margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <a href="https://www.tiktok.com/@bsdressingservice?_r=1&_t=ZS-97rhoEdGxWr" target="_blank" class="social-icon" style="font-size: 1.5rem; color: #000; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="bi bi-tiktok"></i>
+            <span style="font-size: 0.95rem; font-weight: 600;">Consultez notre TikTok</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Col 2: Navigation Links -->
+      <div class="footer-col links-col">
+        <h4>Boutique</h4>
+        <ul>
+          <li><a routerLink="/search">Tous les meubles</a></li>
+          <li><a routerLink="/search" [queryParams]="{ category: 'meuble_rangement' }">Meubles de Rangement</a></li>
+          <li><a routerLink="/search" [queryParams]="{ isPromo: 'true' }">Promotions</a></li>
+          <li><a routerLink="/profile">Espace Membre</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Assistance & Payments -->
+      <div class="footer-col help-col">
+        <h4>Support & Paiement</h4>
+        <ul>
+          <li><a routerLink="/profile">Historique de commandes</a></li>
+          <li><a href="https://wa.me/24176471085" target="_blank"><i class="bi bi-whatsapp"></i> WhatsApp +241 76471085</a></li>
+          <li><a href="https://wa.me/241062186541" target="_blank"><i class="bi bi-whatsapp"></i> WhatsApp +241 062186541</a></li>
+          <li><a href="https://wa.me/241077961650" target="_blank"><i class="bi bi-whatsapp"></i> WhatsApp +241 077961650</a></li>
+        </ul>
+        <div class="payment-badges-row">
+          <span class="badge-tag">Airtel Money</span>
+          <span class="badge-tag">Mobile Money</span>
+          <span class="badge-tag">CB / Visa</span>
+        </div>
+      </div>
+
+      <!-- Col 4: Newsletter -->
+      <div class="footer-col newsletter-col">
+        <h4>Newsletter</h4>
+        <p>Inscrivez-vous pour découvrir nos nouveaux meubles de rangement et promotions exclusives.</p>
+        <div class="newsletter-form">
+          <input type="email" #newsletterInput placeholder="Votre adresse e-mail" class="input-premium" />
+          <button class="btn-premium submit-newsletter-btn" routerLink="/profile">S'inscrire</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Copyright Bottom Row -->
+    <div class="footer-bottom">
+      <p>&copy; 2026 BS Dressing Service. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- Global Notification Toast Component -->
+  <app-notification-toast></app-notification-toast>
+</div>
