@@ -62,6 +62,7 @@ async function startServer() {
     console.log('Database connection authenticated.');
     
     // await sequelize.sync();
+    await sequelize.sync({ alter: true });
     console.log('Database models synchronized.');
 
     // 2. Initialize Socket.io
@@ -69,7 +70,7 @@ async function startServer() {
     console.log('Socket.io initialized.');
 
     // 3. Start HTTP server
-    server.listen(PORT, () => {
+    server.listen(PORT, '0.0.0.0', () => {
       console.log(`Server is running on http://localhost:${PORT}`);
       console.log(`Uploaded photos served at http://localhost:${PORT}/uploads/`);
       console.log(`WebSocket server ready for real-time communication`);
@@ -79,7 +80,7 @@ async function startServer() {
     console.log('Express server starting in offline mode (please launch WampServer MySQL)...');
     
     initializeSocket(server);
-    server.listen(PORT, () => {
+    server.listen(PORT, '0.0.0.0', () => {
       console.log(`Server running in offline fallback mode on http://localhost:${PORT}`);
     });
   }
