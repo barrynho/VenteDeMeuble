@@ -61,7 +61,7 @@ async function startServer() {
     await sequelize.authenticate();
     console.log('Database connection authenticated.');
     
-    await sequelize.sync();
+    // await sequelize.sync();
     console.log('Database models synchronized.');
 
     // 2. Initialize Socket.io
