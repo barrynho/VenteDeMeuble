@@ -28,7 +28,7 @@ export interface Order {
   providedIn: 'root'
 })
 export class OrderService {
-  private readonly apiUrl = 'https://ventedemeuble1.onrender.com/api/orders';
+  private readonly apiUrl = 'https://mon-vrai-backend.onrender.com/api/orders';
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 

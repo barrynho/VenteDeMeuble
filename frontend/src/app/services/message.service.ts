@@ -7,7 +7,7 @@ import { io, Socket } from 'socket.io-client';
   providedIn: 'root'
 })
 export class MessageService {
-  private apiUrl = 'https://ventedemeuble1.onrender.com/api/messages';
+  private apiUrl = 'https://mon-vrai-backend.onrender.com/api/messages';
   private socket: Socket | null = null;
 
   constructor(private http: HttpClient) {}
@@ -18,7 +18,7 @@ export class MessageService {
       this.socket.disconnect();
     }
     const authOpts = token ? { token } : {};
-    this.socket = io('https://ventedemeuble1.onrender.com', {
+    this.socket = io('https://mon-vrai-backend.onrender.com', {
       auth: authOpts,
       transports: ['websocket']
     });

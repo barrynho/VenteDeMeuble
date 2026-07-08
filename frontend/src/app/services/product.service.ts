@@ -63,7 +63,7 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
-  private readonly baseUrl = 'https://ventedemeuble1.onrender.com/api';
+  private readonly baseUrl = 'https://mon-vrai-backend.onrender.com/api';
   
   // Local states
   readonly favorites = signal<Product[]>([]);

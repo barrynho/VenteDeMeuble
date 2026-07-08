@@ -11,7 +11,7 @@ export const ORDER_CONTACTS: OrderContact[] = [
 
 export const DEFAULT_PRODUCT_IMAGE = '/uploads/WhatsApp Image 2026-07-01 at 20.31.11.jpeg';
 
-export const API_BASE = 'https://ventedemeuble1.onrender.com';
+export const API_BASE = 'https://mon-vrai-backend.onrender.com';
 
 export function productImageUrl(imageUrl?: string): string {
   return `${API_BASE}${imageUrl || DEFAULT_PRODUCT_IMAGE}`;

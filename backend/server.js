@@ -62,8 +62,8 @@ async function startServer() {
     console.log('Database connection authenticated.');
     
     // await sequelize.sync();
-    await sequelize.sync({ alter: true });
-    console.log('Database models synchronized.');
+    // await sequelize.sync({ alter: true });
+    console.log('Database models synchronized (skipped sync to avoid FK error).');
 
     // 2. Initialize Socket.io
     initializeSocket(server);

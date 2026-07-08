@@ -18,7 +18,7 @@ export interface AppliedCoupon {
   providedIn: 'root'
 })
 export class CartService {
-  private readonly couponApi = 'https://ventedemeuble1.onrender.com/api/coupons/validate';
+  private readonly couponApi = 'https://mon-vrai-backend.onrender.com/api/coupons/validate';
   
   readonly cartItems = signal<CartItem[]>([]);
   

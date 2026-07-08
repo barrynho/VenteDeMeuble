@@ -170,7 +170,7 @@ import { AuthService } from '../../services/auth.service';
 
           <div class="items-mini-list">
             <div class="item-mini" *ngFor="let item of cartItems()">
-              <img [src]="'https://ventedemeuble1.onrender.com' + (item.product.images[0]?.imageUrl || '/uploads/placeholder.png')" [alt]="item.product.name" />
+              <img [src]="'https://mon-vrai-backend.onrender.com' + (item.product.images[0]?.imageUrl || '/uploads/placeholder.png')" [alt]="item.product.name" />
               <div class="item-mini-info">
                 <h4>{{ item.product.name }}</h4>
                 <p>Qté: {{ item.quantity }}</p>

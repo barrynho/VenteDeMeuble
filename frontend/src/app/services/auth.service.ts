@@ -17,7 +17,7 @@ export interface UserProfile {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly apiUrl = 'https://ventedemeuble1.onrender.com/api/auth';
+  private readonly apiUrl = 'https://mon-vrai-backend.onrender.com/api/auth';
   
   // Signals for reactive state management
   readonly currentUser = signal<UserProfile | null>(null);

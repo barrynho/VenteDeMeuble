@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class AdminService {
-  private readonly apiUrl = 'https://ventedemeuble1.onrender.com/api/admin';
+  private readonly apiUrl = 'https://mon-vrai-backend.onrender.com/api/admin';
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 

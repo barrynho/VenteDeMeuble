@@ -161,7 +161,7 @@ import { ORDER_CONTACTS, OrderContact, productImageUrl } from '../../config/cont
     <!-- Zoom modal fullscreen -->
     <div class="zoom-modal" *ngIf="isZoomed()">
       <button class="close-zoom" (click)="toggleZoom(false)"><i class="bi bi-x-lg"></i></button>
-      <img [src]="'https://ventedemeuble1.onrender.com' + activeImageUrl()" class="zoomed-img" [alt]="product()?.name" />
+      <img [src]="'https://mon-vrai-backend.onrender.com' + activeImageUrl()" class="zoomed-img" [alt]="product()?.name" />
     </div>
 
     <ng-template #loadingTpl>
@@ -783,7 +783,7 @@ export class ProductDetailComponent implements OnInit {
     const user = this.auth.currentUser();
     const userName = user ? user.name : 'Client';
     const selectedNumber = this.selectedContact().phone;
-    const imageUrl = 'https://ventedemeuble1.onrender.com' + this.activeImageUrl();
+    const imageUrl = 'https://mon-vrai-backend.onrender.com' + this.activeImageUrl();
     
     const message = `Bonjour BS Dressing Service, je suis ${userName}.\n\nJe souhaite commander ce meuble:\n` +
       `📦 Produit: ${p.name}\n` +

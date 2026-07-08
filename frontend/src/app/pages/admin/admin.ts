@@ -157,7 +157,7 @@ import { NotificationService } from '../../services/notification.service';
         <div class="products-list-admin">
           <div class="admin-item-row" *ngFor="let prod of products()">
             <div class="row-thumbnail">
-              <img [src]="'https://ventedemeuble1.onrender.com' + (prod.images[0]?.imageUrl || '/uploads/zara_wool_coat.png')" [alt]="prod.name" />
+              <img [src]="'https://mon-vrai-backend.onrender.com' + (prod.images[0]?.imageUrl || '/uploads/zara_wool_coat.png')" [alt]="prod.name" />
             </div>
             <div class="row-info">
               <h4>{{ prod.name }}</h4>

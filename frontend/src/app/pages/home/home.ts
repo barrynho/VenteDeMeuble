@@ -36,7 +36,7 @@ import { productImageUrl, API_BASE } from '../../config/contact.config';
              *ngFor="let cat of categories()"
              [routerLink]="['/search']" [queryParams]="{ category: cat.slug }">
           <div class="circle-image">
-            <img [src]="'https://ventedemeuble1.onrender.com' + cat.imageUrl" [alt]="cat.name" />
+            <img [src]="'https://mon-vrai-backend.onrender.com' + cat.imageUrl" [alt]="cat.name" />
           </div>
           <span>{{ cat.name }}</span>
         </div>
@@ -416,7 +416,7 @@ export class HomeComponent implements OnInit {
   promoProducts = signal<Product[]>([]);
   popularProducts = signal<Product[]>([]);
   
-  currentBanner = signal('https://ventedemeuble1.onrender.com/uploads/banniere.jpeg');
+  currentBanner = signal('https://mon-vrai-backend.onrender.com/uploads/banniere.jpeg');
   recentlyViewed = this.productService.recentlyViewed;
 
   constructor() {}
