@@ -109,8 +109,8 @@ export async function getProducts(req, res) {
 
     return res.json(products);
   } catch (error) {
-    console.error('Get products error:', error);
-    return res.status(500).json({ message: 'Erreur lors du chargement des produits.' });
+    console.error('Erreur lors du chargement des produits:', error);
+    res.status(500).json({ message: 'Erreur lors du chargement des produits.', error: error.message });
   }
 }
 
